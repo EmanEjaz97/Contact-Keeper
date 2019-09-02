@@ -34,7 +34,7 @@ router.post(
       let user = await User.findOne({ email });
 
       if (user) {
-        return res.status(400).send("User already exits");
+        return res.status(400).json({ msg: "User already exits" });
       }
 
       user = new User(req.body);
@@ -50,7 +50,7 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          res.json({ token: token });
+          res.json({ token });
         }
       );
     } catch (error) {

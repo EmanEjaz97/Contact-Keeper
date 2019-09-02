@@ -4,17 +4,13 @@ import PropTypes from "prop-types";
 
 const ContactItem = ({ contact }) => {
   const contactContext = useContext(ContactContext);
+  const { delContact, setCurrent, clearCurrent } = contactContext;
 
-  const { id, name, email, phone, type } = contact;
+  const { _id, name, email, phone, type } = contact;
 
-  const deleteClickHandler = e => {
-    e.preventDefault();
-    contactContext.delContact(contact);
-    contactContext.clearCurrent();
-  };
-
-  const editClickHandler = e => {
-    contactContext.setCurrent(contact);
+  const onDelete = () => {
+    delContact(_id);
+    clearCurrent();
   };
 
   return (
@@ -34,20 +30,23 @@ const ContactItem = ({ contact }) => {
       <ul className='list'>
         {email && (
           <li>
-            <i className='fas fa-envelope-open'></i> {email}
+            <i className='fas fa-envelope-open' /> {email}
           </li>
         )}
         {phone && (
           <li>
-            <i className='fas fa-phone'></i> {phone}
+            <i className='fas fa-phone' /> {phone}
           </li>
         )}
       </ul>
       <p>
-        <button className='btn btn-dark btn-sm' onClick={editClickHandler}>
+        <button
+          className='btn btn-dark btn-sm'
+          onClick={() => setCurrent(contact)}
+        >
           Edit
         </button>
-        <button className='btn btn-danger btn-sm' onClick={deleteClickHandler}>
+        <button className='btn btn-danger btn-sm' onClick={onDelete}>
           Delete
         </button>
       </p>
